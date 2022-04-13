@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <title>JavaScript Voice-to-Text App</title>
+  </head>
+  <body>
+    <div class="container text-center">
+      <h1>JavaScript Voice-to-Text App</h1>
+      <p>
+        Powered by
+        <a href="https://app.assemblyai.com/signup"
+          >AssemblyAI's Speech-to-Text API</a
+        >
+      </p>
+
+      <hr />
+
+      <button class="btn btn-primary">Start recording</button>
+      <br />
+      <br />
+      <br />
+
+      <div id="display"></div>
+      <div id="transcript"></div>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.js"
+      integrity="sha512-MNW6IbpNuZZ2VH9ngFhzh6cUt8L/0rSVa60F8L22K1H72ro4Ki3M/816eSDLnhICu7vwH/+/yb8oB3BtBLhMsA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://unpkg.com/mic-recorder-to-mp3@2.2.1"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
