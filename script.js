@@ -13,7 +13,6 @@ const assembly = axios.create({
   headers: {
     authorization: "YOUR-API-KEY",
     "content-type": "application/json",
-    "transfer-encoding": "chunked",
   },
 })
 
@@ -39,14 +38,14 @@ function stopRecording() {
     .stop()
     .getMp3()
     .then(([buffer, blob]) => {
-      const file = new File(buffer, "music.mp3", {
+      const audioFile = new File(buffer, "music.mp3", {
         type: blob.type,
         lastModified: Date.now(),
       })
-      const player = new Audio(URL.createObjectURL(file))
+      const player = new Audio(URL.createObjectURL(audioFile))
       player.controls = true
 
-      sendAudioFile(file) // Call sendAudioFile function to send file to AssemblyAI for transcription
+      sendAudioFile(audioFile) // Call sendAudioFile function to send file to AssemblyAI for transcription
 
       document.querySelector("#display").appendChild(player)
       button.textContent = "Start recording"
@@ -75,17 +74,22 @@ const sendAudioFile = async (file) => {
     })
     // Check transcript completion with interval
     .then((res) => {
-      assemblyCheckTranscriptCompletion(res.data.id)
+      checkTranscriptCompletion(res.data.id)
     })
     .catch(() => console.log("Request failed!"))
 }
 
 // Function to check transcript completion with interval
-const assemblyCheckTranscriptCompletion = (id) => {
+const checkTranscriptCompletion = (id) => {
   const interval = setInterval(() => {
     assembly.get(`/transcript/${id}`).then((res) => {
       if (res.data.status === "completed") {
         document.querySelector("#transcript").innerHTML = res.data.text
+        clearInterval(interval)
+      }
+      if (res.data.status === "error") {
+        document.querySelector("#transcript").innerHTML =
+          "There was an error :("
         clearInterval(interval)
       }
     })
